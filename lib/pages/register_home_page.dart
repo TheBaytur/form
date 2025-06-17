@@ -18,6 +18,10 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
       body: Form(
         child: ListView(
           padding: EdgeInsets.all(16.0),
+          children: [
+            TextField(),
+            TextFormField(),
+          ],
         ),
       ),
     );
