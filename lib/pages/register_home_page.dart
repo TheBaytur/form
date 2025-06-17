@@ -19,7 +19,8 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
         child: ListView(
           padding: EdgeInsets.all(16.0),
           children: [
-            TextField(),
+            TextField(decoration: InputDecoration(labelText: 'Full name *'),
+            ),
             TextFormField(),
           ],
         ),
