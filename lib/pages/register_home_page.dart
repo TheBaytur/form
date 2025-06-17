@@ -43,14 +43,10 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
             ),
             SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: () {
-                // Handle form submission
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Form submitted successfully!'),
-                  ),
-                );
-              },
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+              ),
               child: Text('Submit'),
             ),
           ],
