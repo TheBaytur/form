@@ -22,11 +22,33 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
             TextField(decoration: InputDecoration(
               labelText: 'Full name *',
               hintText: 'Enter your full name',
+              prefixIcon: Icon(Icons.person),
+              suffixIcon: Icon(
+                Icons.delete_outline_outlined, color: Colors.red
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                ),
               ),
             ),
             SizedBox(height: 16.0),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Phone number *'),         
+              decoration: InputDecoration(labelText: 'Phone number *',
+              hintText: 'Where can we reach you?',
+              helperText: 'e.g. +1 234 567 8900',
+              helperStyle: TextStyle(color: Colors.blueGrey),
+              prefixIcon: Icon(Icons.phone),
+              suffixIcon: Icon(
+                Icons.delete_outline_outlined, color: Colors.red
+                ),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                ),
+              ),  
+              
+       
             ),
             SizedBox(height: 16.0),
             TextFormField(
