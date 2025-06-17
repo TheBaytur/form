@@ -41,6 +41,18 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
             TextFormField(
               decoration: InputDecoration(labelText: 'Confirm Password *'),         
             ),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                // Handle form submission
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Form submitted successfully!'),
+                  ),
+                );
+              },
+              child: Text('Submit'),
+            ),
           ],
         ),
       ),
