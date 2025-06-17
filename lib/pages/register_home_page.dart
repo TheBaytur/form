@@ -21,7 +21,11 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
           children: [
             TextField(decoration: InputDecoration(labelText: 'Full name *'),
             ),
-            TextFormField(),
+            SizedBox(height: 16.0),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Phone number *'),
+            
+            ),
           ],
         ),
       ),
