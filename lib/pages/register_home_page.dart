@@ -11,6 +11,27 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
 
 final _nameController = TextEditingController();
 
+List<String> _countries = [
+    'United States',
+    'Canada',
+    'United Kingdom',
+    'Australia',
+    'India',
+    'Germany',
+    'France',
+    'Japan',
+    'China',
+    'Brazil'
+  ];
+
+  String? _selectedCountry;
+
+  @override
+  void initState() {
+    super.initState();
+    // Additional initialization if needed
+  }
+
 @override
   void dispose() {
     _nameController.dispose();
@@ -65,6 +86,25 @@ final _nameController = TextEditingController();
             SizedBox(height: 16.0),
             TextFormField(
               decoration: InputDecoration(labelText: 'Email Address *'),         
+            ),
+            SizedBox(height: 16.0),
+            DropdownButtonFormField<String>(
+              value: _selectedCountry,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedCountry = newValue;
+                });
+              },
+              items: _countries.map((String country) {
+                return DropdownMenuItem<String>(
+                  value: country,
+                  child: Text(country),
+                );
+              }).toList(),
+              decoration: InputDecoration(
+                labelText: 'Country *',
+                border: OutlineInputBorder(),
+              ),
             ),
             SizedBox(height: 25.0),
             TextFormField(
