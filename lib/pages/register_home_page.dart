@@ -102,6 +102,7 @@ List<String> _countries = [
                 );
               }).toList(),
               decoration: InputDecoration(
+                icon: Icon(Icons.flag),
                 labelText: 'Country *',
                 border: OutlineInputBorder(),
               ),
