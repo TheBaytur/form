@@ -11,8 +11,7 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
 
 final _nameController = TextEditingController();
 
-List<String> _countries = ['United States', 'Canada',
-    'United Kingdom',
+List<String> _countries = ['United States', 'Canada','United Kingdom',
     'Australia',
     'India',
     'Germany',
