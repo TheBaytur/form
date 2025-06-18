@@ -8,6 +8,15 @@ class RegisterHomePage extends StatefulWidget {
 }
 
 class _RegisterHomePageState extends State<RegisterHomePage> {
+
+final _nameController = TextEditingController();
+
+@override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +28,9 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
         child: ListView(
           padding: EdgeInsets.all(16.0),
           children: [
-            TextField(decoration: InputDecoration(
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(
               labelText: 'Full name *',
               hintText: 'Enter your full name',
               prefixIcon: Icon(Icons.person),
@@ -34,6 +45,7 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
             ),
             SizedBox(height: 16.0),
             TextFormField(
+              obscureText: true,
               decoration: InputDecoration(labelText: 'Phone number *',
               hintText: 'Where can we reach you?',
               helperText: 'e.g. +1 234 567 8900',
@@ -46,9 +58,9 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
                   borderRadius: BorderRadius.circular(20.0),
                   borderSide: BorderSide(color: Colors.blue, width: 2.0),
                 ),
-              ),  
-              
-       
+              ),
+              keyboardType: TextInputType.phone,
+
             ),
             SizedBox(height: 16.0),
             TextFormField(
@@ -56,11 +68,21 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
             ),
             SizedBox(height: 25.0),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Life Story *'),         
+              decoration: InputDecoration(labelText: 'Life Story *',
+              border: OutlineInputBorder(),
+              ),         
             ),
              SizedBox(height: 10.0),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Password *'),         
+              decoration: InputDecoration(labelText: 'Password *',
+              suffixIcon: IconButton(
+                 icon: Icon(Icons.visibility),
+                 onPressed: () {
+                   // Toggle password visibility
+                 },
+                 ),
+                 icon: Icon(Icons.security),
+              ),         
             ),
              SizedBox(height: 10.0),
             TextFormField(
