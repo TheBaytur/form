@@ -26,6 +26,10 @@ List<String> _countries = [
 
   String? _selectedCountry;
 
+  final _nameFocus = FocusNode();
+  final _phoneFocus = FocusNode();
+  final _passFocus = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -35,7 +39,16 @@ List<String> _countries = [
 @override
   void dispose() {
     _nameController.dispose();
+    _nameFocus.dispose();
+    _phoneFocus.dispose();
+    _passFocus.dispose();
     super.dispose();
+  }
+
+  void _fieldFocusChange(BuildContext context, FocusNode currentFocus,
+  FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
   }
 
   @override
@@ -49,14 +62,19 @@ List<String> _countries = [
         child: ListView(
           padding: EdgeInsets.all(16.0),
           children: [
-            TextField(
+            TextFormField(
+              focusNode: _nameFocus,
+              autofocus: true,
+              onFieldSubmitted: (value) {
+                _fieldFocusChange(context, _nameFocus, _phoneFocus);
+              },
               controller: _nameController,
               decoration: InputDecoration(
-              labelText: 'Full name *',
-              hintText: 'Enter your full name',
-              prefixIcon: Icon(Icons.person),
-              suffixIcon: Icon(
-                Icons.delete_outline_outlined, color: Colors.red
+                labelText: 'Full name *',
+                hintText: 'Enter your full name',
+                prefixIcon: Icon(Icons.person),
+                suffixIcon: Icon(
+                  Icons.delete_outline_outlined, color: Colors.red
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
@@ -66,6 +84,11 @@ List<String> _countries = [
             ),
             SizedBox(height: 16.0),
             TextFormField(
+              focusNode: _phoneFocus,
+              onFieldSubmitted: (value) {
+                _fieldFocusChange(context, _nameFocus, _passFocus);
+              },
+              
               obscureText: true,
               decoration: InputDecoration(labelText: 'Phone number *',
               hintText: 'Where can we reach you?',
@@ -121,6 +144,7 @@ List<String> _countries = [
             ),
              SizedBox(height: 10.0),
             TextFormField(
+              focusNode: _passFocus,
               decoration: InputDecoration(labelText: 'Password *',
               suffixIcon: IconButton(
                  icon: Icon(Icons.visibility),
