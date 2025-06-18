@@ -106,6 +106,12 @@ List<String> _countries = [
                 labelText: 'Country *',
                 border: OutlineInputBorder(),
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please select a country';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 25.0),
             TextFormField(
