@@ -22,7 +22,6 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
     'China',
     'Brazil',
   ];
-
   String? _selectedCountry;
 
   final _nameFocus = FocusNode();
