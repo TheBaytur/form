@@ -10,6 +10,8 @@ class RegisterHomePage extends StatefulWidget {
 class _RegisterHomePageState extends State<RegisterHomePage> {
   final _nameController = TextEditingController();
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   List<String> _countries = [
     'United States',
     'Canada',
@@ -55,6 +57,7 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: const Text('Register Form Flutter Demo'),
         centerTitle: true,
@@ -173,6 +176,19 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _submitForm () {
+    _showMessage(message: 'Form is not implemented yet');
+  }
+
+  void _showMessage ({required String message}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: Duration(seconds: 2),
       ),
     );
   }
