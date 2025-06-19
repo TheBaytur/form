@@ -184,11 +184,18 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
     _showMessage(message: 'Form is not implemented yet');
   }
 
-  void _showMessage ({required String message}) {
+  void _showMessage ({ required String message}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        backgroundColor: Colors.blue,
         content: Text(message),
         duration: Duration(seconds: 2),
+        action: SnackBarAction(
+          label: 'OK',
+          onPressed: () {
+            // Do something when the user presses the action button
+          },
+        ),
       ),
     );
   }
