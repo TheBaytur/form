@@ -106,9 +106,14 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
                 helperText: 'e.g. +1 234 567 8900',
                 helperStyle: TextStyle(color: Colors.blueGrey),
                 prefixIcon: Icon(Icons.phone),
-                suffixIcon: Icon(
-                  Icons.delete_outline_outlined,
-                  color: Colors.red,
+                suffixIcon: GestureDetector(
+                  onLongPress: () {
+                    _showMessage(message: 'Long press to clear');
+                  },
+                  child: Icon(
+                    Icons.delete_outline_outlined,
+                    color: Colors.red,
+                  ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
