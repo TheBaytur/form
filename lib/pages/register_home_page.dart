@@ -77,9 +77,14 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
                 labelText: 'Full name *',
                 hintText: 'Enter your full name',
                 prefixIcon: Icon(Icons.person),
-                suffixIcon: Icon(
-                  Icons.delete_outline_outlined,
-                  color: Colors.red,
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    _nameController.clear();
+                  },
+                  child: Icon(
+                    Icons.delete_outline_outlined,
+                    color: Colors.red,
+                  ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
