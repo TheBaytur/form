@@ -20,7 +20,7 @@ class UserInfoPage extends StatelessWidget {
           children: [
             ListTile(
               title: Text(
-                '${userInfo.name}',
+                '${userInfo.name.isEmpty ? 'Name not provided' : userInfo.name}',
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
               subtitle: Text('${userInfo.story}', style: TextStyle(fontSize: 16.0)),
