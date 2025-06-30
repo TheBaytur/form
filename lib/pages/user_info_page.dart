@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:form/model/user.dart';
 
 class UserInfoPage extends StatelessWidget {
-  const UserInfoPage({super.key});
+  
+
+  User userInfo;
+  UserInfoPage({super.key, required this.userInfo});
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:form/model/user.dart';
+
+import 'user_info_page.dart';
 
 class RegisterHomePage extends StatefulWidget {
   const RegisterHomePage({super.key});
@@ -8,9 +12,17 @@ class RegisterHomePage extends StatefulWidget {
 }
 
 class _RegisterHomePageState extends State<RegisterHomePage> {
-  final _nameController = TextEditingController();
+  bool _hidepass = true;
 
+  final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _storyController = TextEditingController();
+  final _passController = TextEditingController();
+  final _confirmPassController = TextEditingController();
 
   List<String> _countries = [
     'United States',
@@ -30,16 +42,23 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
   final _phoneFocus = FocusNode();
   final _passFocus = FocusNode();
 
-  @override
-  void initState() {
-    super.initState();
-    // Additional initialization if needed
-  }
+  User newUser = User(
+    name: '',
+    story: '',
+    phoneNumber: '',
+    email: '',
+    country: '',
+  );
 
   @override
   void dispose() {
     _nameController.dispose();
     _nameFocus.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
+    _storyController.dispose();
+    _passController.dispose();
+    _confirmPassController.dispose();
     _phoneFocus.dispose();
     _passFocus.dispose();
     super.dispose();
@@ -69,7 +88,7 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
             TextFormField(
               focusNode: _nameFocus,
               autofocus: true,
-              onFieldSubmitted: (value) {
+              onFieldSubmitted: (_) {
                 _fieldFocusChange(context, _nameFocus, _phoneFocus);
               },
               controller: _nameController,
@@ -90,7 +109,15 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
                   borderRadius: BorderRadius.circular(20.0),
                   borderSide: BorderSide(color: Colors.blue, width: 2.0),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                ),
               ),
+              validator: _validateName,
+              onSaved: (value) {
+                newUser.name = value ?? '';
+              },
             ),
             SizedBox(height: 16.0),
             TextFormField(
@@ -99,13 +126,13 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
                 _fieldFocusChange(context, _nameFocus, _passFocus);
               },
 
-              obscureText: true,
+              controller: _phoneController,
               decoration: InputDecoration(
                 labelText: 'Phone number *',
                 hintText: 'Where can we reach you?',
                 helperText: 'e.g. +1 234 567 8900',
                 helperStyle: TextStyle(color: Colors.blueGrey),
-                prefixIcon: Icon(Icons.phone),
+                prefixIcon: Icon(Icons.call),
                 suffixIcon: GestureDetector(
                   onLongPress: () {
                     _showMessage(message: 'Long press to clear');
@@ -121,17 +148,35 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
                 ),
               ),
               keyboardType: TextInputType.phone,
+              inputFormatters: [
+                FilteringTextInputFormatter(RegExp(r'^[0-9+() -]*$'), allow: true),
+              ],
+              validator: (value) => _validatePhoneNumber(value)
+                  ? null
+                  : 'Please enter a valid phone number',
+              onSaved: (value) => newUser.phoneNumber = value ?? '',
             ),
             SizedBox(height: 16.0),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Email Address *'),
+              controller: _emailController,
+              decoration: InputDecoration(labelText: 
+              'Email Address *',
+              hintText: 'Enter your email address',
+              icon: Icon(Icons.email),
             ),
+            keyboardType: TextInputType.emailAddress,
+            validator: _validateEmail,
+            onSaved: (value) => newUser.email = value!,
+            ),
+
             SizedBox(height: 16.0),
             DropdownButtonFormField<String>(
               value: _selectedCountry,
-              onChanged: (String? newValue) {
+              onChanged: (country) {
+                print(country);
                 setState(() {
-                  _selectedCountry = newValue;
+                  _selectedCountry = country;
+                  
                 });
               },
               items:
@@ -146,20 +191,22 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
                 labelText: 'Country *',
                 border: OutlineInputBorder(),
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please select a country';
-                }
-                return null;
-              },
-            ),
+              
+           ),
+
             SizedBox(height: 25.0),
             TextFormField(
               decoration: InputDecoration(
                 labelText: 'Life Story *',
                 border: OutlineInputBorder(),
               ),
+              maxLines: 3,
+              controller: _storyController,
+              // Remove onSaved assignment to final field
+
             ),
+
+
             SizedBox(height: 10.0),
             TextFormField(
               focusNode: _passFocus,
@@ -180,7 +227,17 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
             ),
             SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserInfoPage(
+                      userInfo: newUser,
+                    ),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
               child: Text('Submit'),
             ),
@@ -191,7 +248,14 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
   }
 
   void _submitForm () {
-    _showMessage(message: 'Form is not implemented yet');
+    if (_formKey.currentState?.validate() ?? false) {
+      _formKey.currentState?.save();
+      // Here you can handle the form submission, e.g., send data to a server
+      _showDialog(name: _nameController.text);
+      
+    } else {
+      _showMessage(message: 'Please correct the errors in the form');
+    }
   }
 
   void _showMessage ({ required String message}) {
@@ -208,5 +272,55 @@ class _RegisterHomePageState extends State<RegisterHomePage> {
         ),
       ),
     );
+  }
+
+  String? _validateName(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Name is required';
+    }
+    if (value.trim().length < 3) {
+      return 'Name must be at least 3 characters long';
+    }
+    return null;
+  }
+
+  void _showDialog({required String name}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Registration Successful'),
+          content: Text('Welcome, $name!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  bool _validatePhoneNumber(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return false;
+    }
+    // Basic phone number validation: must be at least 10 digits
+    final phoneExp = RegExp(r'^\+?[\d\s\-\(\)]{10,}$');
+    return phoneExp.hasMatch(value.trim());
+  }
+
+  String? _validateEmail(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Email is required';
+    }
+    final emailExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailExp.hasMatch(value.trim())) {
+      return 'Please enter a valid email address';
+    }
+    return null;
   }
 }
