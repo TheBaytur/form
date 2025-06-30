@@ -23,13 +23,13 @@ class UserInfoPage extends StatelessWidget {
                 '${userInfo.name}',
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
-              subtitle: Text('Story', style: TextStyle(fontSize: 16.0)),
+              subtitle: Text('${userInfo.story}', style: TextStyle(fontSize: 16.0)),
               leading: Icon(Icons.person, size: 40.0, color: Colors.black54),
-              trailing: Text('Country', style: TextStyle(fontSize: 16.0)),
+              trailing: Text('${userInfo.country}', style: TextStyle(fontSize: 16.0)),
             ),
             ListTile(
               title: Text(
-                'Phone number',
+                '${userInfo.phoneNumber}',
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
               subtitle: Text('+1 123-456-7890', style: TextStyle(fontSize: 16.0)),
@@ -38,7 +38,7 @@ class UserInfoPage extends StatelessWidget {
             ),
             ListTile(
               title: Text(
-                'Email',
+                '${userInfo.email.isEmpty ? 'Email not provided' : userInfo.email}',
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
               subtitle: Text('Email address', style: TextStyle(fontSize: 16.0)),
