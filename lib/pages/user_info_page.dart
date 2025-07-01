@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:form/model/user.dart';
 
 class UserInfoPage extends StatelessWidget {
-  
-
   User userInfo;
   UserInfoPage({super.key, required this.userInfo});
 
@@ -23,16 +21,25 @@ class UserInfoPage extends StatelessWidget {
                 '${userInfo.name.isEmpty ? 'Name not provided' : userInfo.name}',
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
-              subtitle: Text('${userInfo.story}', style: TextStyle(fontSize: 16.0)),
+              subtitle: Text(
+                '${userInfo.story}',
+                style: TextStyle(fontSize: 16.0),
+              ),
               leading: Icon(Icons.person, size: 40.0, color: Colors.black54),
-              trailing: Text('${userInfo.country}', style: TextStyle(fontSize: 16.0)),
+              trailing: Text(
+                '${userInfo.country}',
+                style: TextStyle(fontSize: 16.0),
+              ),
             ),
             ListTile(
               title: Text(
                 '${userInfo.phoneNumber}',
                 style: TextStyle(fontWeight: FontWeight.w500),
               ),
-              subtitle: Text('+1 123-456-7890', style: TextStyle(fontSize: 16.0)),
+              subtitle: Text(
+                '+1 123-456-7890',
+                style: TextStyle(fontSize: 16.0),
+              ),
               leading: Icon(Icons.phone, size: 40.0, color: Colors.black54),
               trailing: Text('123-456-7890', style: TextStyle(fontSize: 16.0)),
             ),
